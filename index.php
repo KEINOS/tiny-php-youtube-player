@@ -40,12 +40,20 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 	</div>
 	<div>
 		Search as a :
-		<label><input type='radio' name='play_mode' value='song' <?php echo $att_is_song_mode;?> >Song name</label>
-		<label><input type='radio' name='play_mode' value='list' <?php echo $att_is_list_mode;?> >Play List name</label>
+		<label>
+			<input type='radio' name='play_mode' value='song' <?php echo $att_is_song_mode;?> >
+			Song name
+		</label>
+		<label>
+			<input type='radio' name='play_mode' value='list' <?php echo $att_is_list_mode;?> >
+			Play List name
+		</label>
+
 	</div>
 	<div>
 		<label>
-			Debug mode : <input type='checkbox' name="debug_mode" value="true" <?php echo $att_is_debug_mode; ?> >
+			Debug mode :
+			<input type='checkbox' name="debug_mode" value="true" <?php echo $att_is_debug_mode; ?> >
 			(Show output log after play)
 		</label>
 	</div>
