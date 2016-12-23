@@ -1,4 +1,4 @@
-[[日本語](README.ja.md)][English]
+[English][[日本語](README.ja.md)]
 # tiny-PHP-youtube-player
 A very tiny PHP Youtube Music Player for Mpsyt([MPS-youtube by @ids1024]( https://github.com/mps-youtube/mps-youtube )).
 
