@@ -4,10 +4,10 @@
 $my_ytp = new Tiny_YTP_MPSYT();
 
 /* Set basic settings */
-$my_ytp->api_key      = '';     // your Youtube Data API key. https://console.developers.google.com/apis/api/youtube/
-$my_ytp->player       = 'mpv';  // omxplayer or mpv
-$my_ytp->searh_mode   = 'song'; // song or list
-$my_ytp->path_mpsyt   = '/usr/local/bin/mpsyt'; // use `whereis mpsyt` to find
+$my_ytp->api_key    = '';     // your Youtube Data API key. https://console.developers.google.com/apis/api/youtube/
+$my_ytp->player     = 'mpv';  // omxplayer or mpv
+$my_ytp->searh_mode = 'song'; // song or list
+$my_ytp->path_mpsyt = '/usr/local/bin/mpsyt'; // use `whereis mpsyt` to find
 
 /* Set GET query value or default settings */
 $my_ytp->debug_mode     = ( isset( $_GET['debug_mode'] ) ) ? $_GET['debug_mode'] : "false";
