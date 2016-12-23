@@ -4,15 +4,15 @@
 $my_ytp = new Tiny_YTP_MPSYT();
 
 /* Set basic settings */
-$my_ytp->api_key      = '';     // your Youtube Data API key
+$my_ytp->api_key      = '';     // your Youtube Data API key. https://console.developers.google.com/apis/api/youtube/
 $my_ytp->player       = 'mpv';  // omxplayer or mpv
 $my_ytp->searh_mode   = 'song'; // song or list
 $my_ytp->path_mpsyt   = '/usr/local/bin/mpsyt'; // use `whereis mpsyt` to find
 
 /* Set GET query value or default settings */
-$my_ytp->search_keyword = ( isset( $_GET['search']     ) ) ? $_GET['search']     : "shortest song";
 $my_ytp->debug_mode     = ( isset( $_GET['debug_mode'] ) ) ? $_GET['debug_mode'] : "false";
 $my_ytp->play_mode      = ( isset( $_GET['play_mode']  ) ) ? $_GET['play_mode']  : 'song';
+$my_ytp->search_keyword = ( isset( $_GET['search']     ) ) ? $_GET['search']     : "shortest song";
 $my_ytp->status         = ( isset( $_GET['status']     ) ) ? $_GET['status']     : 'stop';
 
 /* Pre prossess like sanitizing or setting flags */
@@ -29,11 +29,10 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 	<meta charset='UTF-8'>
 	<title>Tiny PHP Youtube Player for Mpsyt</title>
 </head>
-<body>
-
-<h1>Tiny PHP Youtube Player for Mpsyt</h1>
-<h2>Search</h2>
-<form action='./index2.php' method='get'>
+<body>	
+	<h1>Tiny PHP Youtube Player for Mpsyt</h1>
+	<h2>Search</h2>
+	<form action='./index2.php' method='get'>
 	<div>
 		Search keyword :
 		<input type='text' name='search' value='<?php echo $my_ytp->search_keyword; ?>' >
@@ -48,7 +47,7 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 			<input type='radio' name='play_mode' value='list' <?php echo $att_is_list_mode;?> >
 			Play List name
 		</label>
-
+	
 	</div>
 	<div>
 		<label>
@@ -61,14 +60,15 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 		<button type='submit' name="status" value='play'>Play the 1st hit</button>
 		<button type='submit' name="status" value='stop'>Stop the music</button>
 	</div>
-</form>
-
-<h2>Status</h2>
-<?php $my_ytp->play(); ?>
-
-<hr>
-<p><small>Powered by <a href='https://github.com/mps-youtube/mps-youtube'>Mps-yutube</a></small></p>
-</body></html>
+	</form>
+	
+	<h2>Status</h2>
+	<?php $my_ytp->play(); ?>
+	
+	<hr>
+	<p><small>Powered by <a href='https://github.com/mps-youtube/mps-youtube'>Mps-yutube</a></small></p>
+</body>
+</html>
 
 <?php
 /* =====================================================
