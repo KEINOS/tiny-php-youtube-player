@@ -32,7 +32,7 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 <body>	
 	<h1>Tiny PHP Youtube Player for Mpsyt</h1>
 	<h2>Search</h2>
-	<form action='./index2.php' method='get'>
+	<form action='./' method='get'>
 	<div>
 		Search keyword :
 		<input type='text' name='search' value='<?php echo $my_ytp->search_keyword; ?>' >
