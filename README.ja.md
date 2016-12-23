@@ -1,4 +1,4 @@
-[[English](./)][日本語]
+[[English](https://github.com/KEINOS/tiny-php-youtube-player)][日本語]
 # tiny-PHP-youtube-player
 [@ids1024さんのMPS-youtube]( https://github.com/mps-youtube/mps-youtube )を利用したPHPによるシンプルなYoutube音楽プレーヤーです。
 
