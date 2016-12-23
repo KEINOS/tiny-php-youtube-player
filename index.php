@@ -29,7 +29,7 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 	<meta charset='UTF-8'>
 	<title>Tiny PHP Youtube Player for Mpsyt</title>
 </head>
-<body>	
+<body>
 	<h1>Tiny PHP Youtube Player for Mpsyt</h1>
 	<h2>Search</h2>
 	<form action='./' method='get'>
@@ -47,7 +47,7 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 			<input type='radio' name='play_mode' value='list' <?php echo $att_is_list_mode;?> >
 			Play List name
 		</label>
-	
+
 	</div>
 	<div>
 		<label>
@@ -61,10 +61,10 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 		<button type='submit' name="status" value='stop'>Stop the music</button>
 	</div>
 	</form>
-	
+
 	<h2>Status</h2>
 	<?php $my_ytp->play(); ?>
-	
+
 	<hr>
 	<p><small>Powered by <a href='https://github.com/mps-youtube/mps-youtube'>Mps-yutube</a></small></p>
 </body>
@@ -107,12 +107,12 @@ class Tiny_YTP_MPSYT {
 
 	/* Constants */
 	const DO_NOT_SHOW_HISTORY = true;
-	
+
 	function __construct( ){}
 
 
 	function log_output( $array ){
-		$this->array_output_log += array_filter( $array );		
+		$this->array_output_log += array_filter( $array );
 	}
 
 	function log_returned_value( $value ){
@@ -134,7 +134,7 @@ class Tiny_YTP_MPSYT {
 		if( $this->flag_is_debug_mode && ! $flag_force_unshow_history ){
 			exec( "sudo {$this->path_mpsyt} history,q", $output, $return_var );
 			$this->log_output( $output );
-			$this->log_returned_value( $return_var );			
+			$this->log_returned_value( $return_var );
 		}
 
 	}
@@ -174,7 +174,7 @@ class Tiny_YTP_MPSYT {
 		if( ! $this->flag_is_sanitized ){
 			$this->sanitize();
 		}
-		
+
 		$this->set_flags();
 
 		$path_mpsyt         = $this->path_mpsyt;
@@ -201,7 +201,7 @@ class Tiny_YTP_MPSYT {
 
 	/* Main function to play Mpsyt */
 	function play(){
-		
+
 		$this->set_flags();
 
 		if ( $this->flag_stop_play ){
