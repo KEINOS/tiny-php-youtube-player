@@ -10,18 +10,25 @@ $my_ytp->searh_mode = 'song'; // song or list
 $my_ytp->path_mpsyt = '/usr/local/bin/mpsyt'; // use `whereis mpsyt` to find
 
 /* Set GET query value or default settings */
-$my_ytp->debug_mode     = ( isset( $_GET['debug_mode'] ) ) ? $_GET['debug_mode'] : "false";
-$my_ytp->play_mode      = ( isset( $_GET['play_mode']  ) ) ? $_GET['play_mode']  : 'song';
-$my_ytp->search_keyword = ( isset( $_GET['search']     ) ) ? $_GET['search']     : "shortest song";
-$my_ytp->status         = ( isset( $_GET['status']     ) ) ? $_GET['status']     : 'stop';
+$my_ytp->debug_mode     = ( isset( $_GET['debug_mode']   ) ) ? $_GET['debug_mode']   : "false";
+$my_ytp->shuffle_mode   = ( isset( $_GET['shuffle_mode'] ) ) ? $_GET['shuffle_mode'] : "false";
+$my_ytp->search_mode    = ( isset( $_GET['search_mode']  ) ) ? $_GET['search_mode']  : 'song';
+$my_ytp->search_keyword = ( isset( $_GET['search']       ) ) ? $_GET['search']       : "shortest song";
+$my_ytp->status         = ( isset( $_GET['status']       ) ) ? $_GET['status']       : 'stop';
 
 /* Pre prossess like sanitizing or setting flags */
 $my_ytp->ready();
 
 /* Creating checked attribute for HTML form */
-$att_is_debug_mode = ( $my_ytp->flag_is_debug_mode ) ? " checked='checked'" : '';
-$att_is_song_mode  = ( $my_ytp->flag_is_song_mode  ) ? " checked='checked'" : '';
-$att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : '';
+$att_is_debug_mode   = ( $my_ytp->flag_is_debug_mode       ) ? " checked='checked'" : '';
+$att_is_shuffle_mode = ( $my_ytp->flag_is_shuffle_mode     ) ? " checked='checked'" : '';
+$att_is_song_mode    = ( 'song'   == $my_ytp->search_mode  ) ? " checked='checked'" : '';
+$att_is_list_mode    = ( 'list'   == $my_ytp->search_mode  ) ? " checked='checked'" : '';
+$att_is_album_mode   = ( 'album'  == $my_ytp->search_mode  ) ? " checked='checked'" : '';
+$att_is_user_mode    = ( 'user'   == $my_ytp->search_mode  ) ? " checked='checked'" : '';
+$att_is_userpl_mode  = ( 'userpl' == $my_ytp->search_mode  ) ? " checked='checked'" : '';
+$att_is_url_mode     = ( 'url'    == $my_ytp->search_mode  ) ? " checked='checked'" : '';
+$att_is_pl_mode      = ( 'pl'     == $my_ytp->search_mode  ) ? " checked='checked'" : '';
 
 ?>
 <html>
@@ -40,14 +47,41 @@ $att_is_list_mode  = ( $my_ytp->flag_is_list_mode  ) ? " checked='checked'" : ''
 	<div>
 		Search as a :
 		<label>
-			<input type='radio' name='play_mode' value='song' <?php echo $att_is_song_mode;?> >
+			<input type='radio' name='search_mode' value='song' <?php echo $att_is_song_mode;?> >
 			Song name
 		</label>
 		<label>
-			<input type='radio' name='play_mode' value='list' <?php echo $att_is_list_mode;?> >
-			Play List name
+			<input type='radio' name='search_mode' value='list' <?php echo $att_is_list_mode;?> >
+			Play list name
+		</label>
+		<label>
+			<input type='radio' name='search_mode' value='album' <?php echo $att_is_list_mode;?> >
+			Album name
+		</label>
+		<label>
+			<input type='radio' name='search_mode' value='user' <?php echo $att_is_list_mode;?> >
+			User name
+		</label>
+		<label>
+			<input type='radio' name='search_mode' value='userpl' <?php echo $att_is_list_mode;?> >
+			User playlist
+		</label>
+		<label>
+			<input type='radio' name='search_mode' value='url' <?php echo $att_is_list_mode;?> >
+			Video ID
+		</label>
+		<label>
+			<input type='radio' name='search_mode' value='pl' <?php echo $att_is_list_mode;?> >
+			Play list ID
 		</label>
 
+	</div>
+	<div>
+		<label>
+			Shuffle mode :
+			<input type='checkbox' name="shuffle_mode" value="true" <?php echo $att_is_shuffle_mode; ?> >
+			(Shuffle search result)
+		</label>
 	</div>
 	<div>
 		<label>
@@ -88,19 +122,18 @@ class Tiny_YTP_MPSYT {
 	public $api_key        = "";
 	public $debug_mode     = "false";
 	public $player         = "mpv";
-	public $play_mode      = "song";
+	public $search_mode    = "song";
 	public $path_mpsyt     = "/usr/local/bin/mpsyt";
 	public $search_keyword = "";
 	public $song_default   = "shortest song";
 	public $status         = "play";
 	public $shuffle_list   = "true";
 
-	public $flag_has_api_key   = false;
-	public $flag_is_sanitized  = false;
-	public $flag_is_debug_mode = false;
-	public $flag_is_list_mode  = false;
-	public $flag_is_song_mode  = true;
-	public $flag_stop_play     = false;
+	public $flag_has_api_key     = false;
+	public $flag_is_sanitized    = false;
+	public $flag_is_debug_mode   = false;
+	public $flag_is_shuffle_mode = false;
+	public $flag_stop_play       = false;
 
 	public $array_output_log     = array();
 	public $array_returned_value = array();
@@ -142,21 +175,54 @@ class Tiny_YTP_MPSYT {
 	/* Escaping input strings to sanitize */
 	function sanitize(){
 		$this->search_keyword = trim( htmlspecialchars( $this->search_keyword ) );
+		$this->search_mode    = trim( htmlspecialchars( $this->search_mode ) );
 		$this->api_key        = trim( htmlspecialchars( $this->api_key ) );
 		$this->song_default   = trim( htmlspecialchars( $this->song_default ) );
 
 		$this->search_keyword = ! empty( $this->search_keyword ) ? $this->search_keyword : $this->song_default;
+		$this->search_mode    = ! empty( $this->search_mode ) ? mb_strtolower( $this->search_mode ) : "song";
 
 		$this->flag_is_sanitized = true;
 	}
 
 	function set_flags(){
-		$this->flag_has_api_key   = ( ! empty( $this->api_key ) ) ? true : false;
-		$this->flag_is_debug_mode = ( 'true' === mb_strtolower( $this->debug_mode ) ) ? true : false;
-		$this->flag_is_song_mode  = ( 'song' === mb_strtolower( $this->play_mode  ) ) ? true : false;
-		$this->flag_is_list_mode  = ( 'list' === mb_strtolower( $this->play_mode  ) ) ? true : false;
-		$this->flag_stop_play     = ( 'stop' === mb_strtolower( $this->status     ) ) ? true : false;
+		$this->flag_has_api_key     = ( ! empty( $this->api_key ) ) ? true : false;
+		$this->flag_is_debug_mode   = ( 'true' === mb_strtolower( $this->debug_mode   ) ) ? true : false;
+		$this->flag_is_shuffle_mode = ( 'true' === mb_strtolower( $this->shuffle_mode ) ) ? true : false;
+		$this->flag_stop_play       = ( 'stop' === mb_strtolower( $this->status       ) ) ? true : false;
 	}
+
+	function get_search_key( $search_mode ){
+		switch( $search_mode ){
+			case "song":
+				$sResult = "/";
+				break;
+			case "list":
+				$sResult = "//";
+				break;
+			case "album":
+				$sResult = "album";
+				break;
+			case "user":
+				$sResult = "user";
+				break;
+			case "url":
+				$sResult = "url";
+				break;
+			case "userpl":
+				$sResult = "userpl";
+				break;
+			case "pl":
+				$sResult = "pl";
+				break;
+			dafault:
+				$sResult = ".";
+				break;
+		}
+		
+		return $sResult;
+	}
+
 
 	function ready(){
 
@@ -181,16 +247,17 @@ class Tiny_YTP_MPSYT {
 		$flag_has_api_key   = $this->flag_has_api_key;
 		$api_key            = $this->api_key;
 		$player             = $this->player;
-		$flag_is_song_mode  = $this->flag_is_song_mode;
 		$search_keyword     = $this->search_keyword;
 		$flag_is_debug_mode = $this->flag_is_debug_mode;
+		$search_key         = $this->get_search_key( $this->search_mode );
+		$shuffle_status     = ( $this->flag_is_shuffle_mode ) ? "shuffle,all," : "";
 
 		/* Creating command */
 		$command  = "sudo {$path_mpsyt}";
 		$command .= ( $flag_has_api_key ) ? " set api_key {$api_key}," : "";
 		$command .= " set player {$player},";
-		$command .= ( $flag_is_song_mode ) ? ".{$search_keyword}," : "//{$search_keyword},";
-		$command .= ( $flag_is_song_mode ) ? "1," : "1,shuffle,all,";
+		$command .= "{$search_key} {$search_keyword},";
+		$command .= "1,{$shuffle_status}";
 		$command .= "q";
 		$command .= ( $flag_is_debug_mode ) ? "" : ' > /dev/null &';
 		$command  = trim( $command );
@@ -226,10 +293,30 @@ class Tiny_YTP_MPSYT {
 			$command = $this->create_command();
 
 		    echo( "<p>Command sent : {$command}</p>" );
-		    if ( $this->flag_is_song_mode ){
-			    echo( '<p>Now playing the first song found...</p>');
-		    }else{
-			    echo( '<p>Now playing the first play list found...<br>(All the songs on the list has been shuffled)</p>');
+		    switch( $this->search_mode ){
+			    case "song":
+				    echo( '<p>Now playing the first song found...</p>' );
+				    break;
+			    case "list":
+				    echo( '<p>Now playing the first play list found...</p>' );
+				    break;
+				case "album":
+				    echo( '<p>Now playing the first album found...</p>' );
+					break;
+				case "user":
+				    echo( '<p>Now playing the first song from the user found...</p>' );
+					break;
+				case "url":
+				    echo( '<p>Now playing the url or video ID found...</p>' );
+					break;
+				case "userpl":
+				    echo( "<p>Now playing the user's first play list found...</p>" );
+					break;
+				case "pl":
+				    echo( '<p>Now playing the url or play list ID found...</p>' );
+					break;
+				default:
+					echo( '<p>Error: no search mode specified.' );
 		    }
 
 		    @ob_flush();
