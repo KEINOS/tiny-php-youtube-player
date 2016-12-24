@@ -19,6 +19,7 @@ $my_ytp->status         = ( isset( $_GET['status']       ) ) ? $_GET['status']  
 /* Pre prossess like sanitizing or setting flags */
 $my_ytp->ready();
 
+
 /* Creating checked attribute for HTML form */
 $att_is_debug_mode   = ( $my_ytp->flag_is_debug_mode       ) ? " checked='checked'" : '';
 $att_is_shuffle_mode = ( $my_ytp->flag_is_shuffle_mode     ) ? " checked='checked'" : '';
@@ -55,23 +56,23 @@ $att_is_pl_mode      = ( 'pl'     == $my_ytp->search_mode  ) ? " checked='checke
 			Play list name
 		</label>
 		<label>
-			<input type='radio' name='search_mode' value='album' <?php echo $att_is_list_mode;?> >
+			<input type='radio' name='search_mode' value='album' <?php echo $att_is_album_mode;?> >
 			Album name
 		</label>
 		<label>
-			<input type='radio' name='search_mode' value='user' <?php echo $att_is_list_mode;?> >
+			<input type='radio' name='search_mode' value='user' <?php echo $att_is_user_mode;?> >
 			User name
 		</label>
 		<label>
-			<input type='radio' name='search_mode' value='userpl' <?php echo $att_is_list_mode;?> >
+			<input type='radio' name='search_mode' value='userpl' <?php echo $att_is_userpl_mode;?> >
 			User playlist
 		</label>
 		<label>
-			<input type='radio' name='search_mode' value='url' <?php echo $att_is_list_mode;?> >
+			<input type='radio' name='search_mode' value='url' <?php echo $att_is_url_mode;?> >
 			Video ID
 		</label>
 		<label>
-			<input type='radio' name='search_mode' value='pl' <?php echo $att_is_list_mode;?> >
+			<input type='radio' name='search_mode' value='pl' <?php echo $att_is_pl_mode;?> >
 			Play list ID
 		</label>
 
