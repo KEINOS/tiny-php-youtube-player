@@ -1,7 +1,9 @@
 <?php
 /* Multi language env test */
-//setlocale(LC_ALL,"ja_JP.UTF-8"); putenv('LC_ALL=ja_JP');
+// uncomment below for Englisth locale.
 //setlocale(LC_ALL,"en_US.UTF-8"); putenv('LC_ALL=en_US');
+// uncomment below for Japananese locale.
+//setlocale(LC_ALL,"ja_JP.UTF-8"); putenv('LC_ALL=ja_JP');
 
 /* The Class is defined at the end of the page */
 $my_ytp = new Tiny_YTP_MPSYT();
