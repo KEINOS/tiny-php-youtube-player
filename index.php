@@ -1,4 +1,7 @@
 <?php
+/* Multi language env test */
+//setlocale(LC_ALL,"ja_JP.UTF-8"); putenv('LC_ALL=ja_JP');
+//setlocale(LC_ALL,"en_US.UTF-8"); putenv('LC_ALL=en_US');
 
 /* The Class is defined at the end of the page */
 $my_ytp = new Tiny_YTP_MPSYT();
@@ -39,65 +42,65 @@ $att_is_pl_mode      = ( 'pl'     == $my_ytp->search_mode  ) ? " checked='checke
 </head>
 <body>
 	<h1>Tiny PHP Youtube Player for Mpsyt</h1>
-	<h2>Search</h2>
+	<h2><?php echo _("Search"); ?></h2>
 	<form action='./' method='get'>
 	<div>
-		Search keyword :
+		<?php echo _("Search keyword"); ?> :
 		<input type='text' name='search' value='<?php echo $my_ytp->search_keyword; ?>' >
 	</div>
 	<div>
-		Search as a :
+		<?php echo _("Search as a"); ?> :
 		<label>
 			<input type='radio' name='search_mode' value='song' <?php echo $att_is_song_mode;?> >
-			Song name
+			<?php echo _("Song name"); ?>
 		</label>
 		<label>
 			<input type='radio' name='search_mode' value='list' <?php echo $att_is_list_mode;?> >
-			Play list name
+			<?php echo _("Play list name"); ?>
 		</label>
 		<label>
 			<input type='radio' name='search_mode' value='album' <?php echo $att_is_album_mode;?> >
-			Album name
+			<?php echo _("Album name"); ?>
 		</label>
 		<label>
 			<input type='radio' name='search_mode' value='user' <?php echo $att_is_user_mode;?> >
-			User name
+			<?php echo _("User name"); ?>
 		</label>
 		<label>
 			<input type='radio' name='search_mode' value='userpl' <?php echo $att_is_userpl_mode;?> >
-			User playlist
+			<?php echo _("User playlist"); ?>
 		</label>
 		<label>
 			<input type='radio' name='search_mode' value='url' <?php echo $att_is_url_mode;?> >
-			Video ID
+			<?php echo _("Video ID"); ?>
 		</label>
 		<label>
 			<input type='radio' name='search_mode' value='pl' <?php echo $att_is_pl_mode;?> >
-			Play list ID
+			<?php echo _("Play list ID"); ?>
 		</label>
 
 	</div>
 	<div>
 		<label>
-			Shuffle mode :
+			<?php echo _("Shuffle mode :"); ?>
 			<input type='checkbox' name="shuffle_mode" value="true" <?php echo $att_is_shuffle_mode; ?> >
-			(Shuffle search result)
+			<?php echo _("(Shuffle search result)"); ?>
 		</label>
 	</div>
 	<div>
 		<label>
-			Debug mode :
+			<?php echo _("Debug mode :"); ?>
 			<input type='checkbox' name="debug_mode" value="true" <?php echo $att_is_debug_mode; ?> >
-			(Show output log after play)
+			<?php echo _("(Show output log after play)"); ?>
 		</label>
 	</div>
 	<div>
-		<button type='submit' name="status" value='play'>Play the 1st hit</button>
-		<button type='submit' name="status" value='stop'>Stop the music</button>
+		<button type='submit' name="status" value='play'><?php echo _("Play the 1st hit"); ?></button>
+		<button type='submit' name="status" value='stop'><?php echo _("Stop the music"); ?></button>
 	</div>
 	</form>
 
-	<h2>Status</h2>
+	<h2><?php echo _("Status");?></h2>
 	<?php $my_ytp->play(); ?>
 
 	<hr>
@@ -119,6 +122,7 @@ $att_is_pl_mode      = ( 'pl'     == $my_ytp->search_mode  ) ? " checked='checke
 	https://github.com/mps-youtube/mps-youtube
    ===================================================== */
 class Tiny_YTP_MPSYT {
+
 	/* Properties */
 	public $api_key        = "";
 	public $debug_mode     = "false";
@@ -142,7 +146,14 @@ class Tiny_YTP_MPSYT {
 	/* Constants */
 	const DO_NOT_SHOW_HISTORY = true;
 
-	function __construct( ){}
+	function __construct( ){
+		/* multi language support */
+		// TODO: avoid below if no gettext func
+		$domain = "translation";
+		$path_locale = realpath( "./locale/" ) . "/";
+		bindtextdomain( $domain, $path_locale );
+		textdomain( $domain );
+	}
 
 
 	function log_output( $array ){

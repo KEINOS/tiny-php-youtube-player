@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tiny-php-youtube-player v.20161225\n"
+"POT-Creation-Date: 2016-12-25 10:26+0900\n"
+"PO-Revision-Date: 2016-12-25 10:28+0900\n"
+"Last-Translator: KEINOS <github@keinos.com>\n"
+"Language-Team: KEINOS <translation@keinos.com>\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SearchPath-0: index.php\n"
+
+#: index.php:42
+msgid "Search"
+msgstr "検索"
+
+#: index.php:45
+msgid "Search keyword"
+msgstr "検索用語"
+
+#: index.php:49
+msgid "Search as a"
+msgstr "絞り込み"
+
+#: index.php:52
+msgid "Song name"
+msgstr "曲名"
+
+#: index.php:56
+msgid "Play list name"
+msgstr "プレイリスト名"
+
+#: index.php:60
+msgid "Album name"
+msgstr "アルバム名"
+
+#: index.php:64
+msgid "User name"
+msgstr "ユーザー名"
+
+#: index.php:68
+msgid "User playlist"
+msgstr "ユーザーのプレイリスト名"
+
+#: index.php:72
+msgid "Video ID"
+msgstr "動画ID"
+
+#: index.php:76
+msgid "Play list ID"
+msgstr "再生リストID"
+
+#: index.php:82
+msgid "Shuffle mode :"
+msgstr "シャッフル・モード"
+
+#: index.php:84
+msgid "(Shuffle search result)"
+msgstr "（検索結果をシャッフルします）"
+
+#: index.php:89
+msgid "Debug mode :"
+msgstr "デバッグ・モード"
+
+#: index.php:91
+msgid "(Show output log after play)"
+msgstr "（再生後、ログの出力結果を表示します）"
+
+#: index.php:95
+msgid "Play the 1st hit"
+msgstr "最初の検索結果を再生"
+
+#: index.php:96
+msgid "Stop the music"
+msgstr "停止"
+
+#: index.php:100
+msgid "Status"
+msgstr "ステータス"
