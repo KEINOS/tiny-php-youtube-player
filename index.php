@@ -215,7 +215,9 @@ class Tiny_YTP_MPSYT {
 				$sResult = "//";
 				break;
 			case "album":
-				$sResult = "album";
+				/* currently not available because of mpsyt issue #103 */
+				/* https://github.com/mps-youtube/mps-youtube/issues/103 */
+				$sResult = "/";
 				break;
 			case "user":
 				$sResult = "user";
@@ -237,6 +239,40 @@ class Tiny_YTP_MPSYT {
 		return $sResult;
 	}
 
+	function get_play_command( $search_mode ){
+		$flag_shuffle = $this->flag_is_shuffle_mode;
+
+		switch( $search_mode ){
+			case "song":
+				$sResult = ( $flag_shuffle ) ? "shuffle,1," : "1,";
+				break;
+			case "list":
+				$sResult = ( $flag_shuffle ) ? "1,shuffle,all," : "";
+				break;
+			case "album":
+				/* currently not available because of mpsyt issue #103 */
+				/* https://github.com/mps-youtube/mps-youtube/issues/103 */
+				$sResult = ( $flag_shuffle ) ? "shuffle,1," : "1,";
+				break;
+			case "user":
+				$sResult = ( $flag_shuffle ) ? "shuffle,1," : "1,";
+				break;
+			case "url":
+				$sResult = "1,";
+				break;
+			case "userpl":
+				$sResult = ( $flag_shuffle ) ? "1,shuffle,all," : "1,all,";
+				break;
+			case "pl":
+				$sResult = ( $flag_shuffle ) ? "1,shuffle,all," : "1,all,";
+				break;
+			dafault:
+				$sResult = "1,";
+				break;
+		}
+		
+		return $sResult;
+	}
 
 	function ready(){
 
@@ -264,14 +300,14 @@ class Tiny_YTP_MPSYT {
 		$search_keyword     = $this->search_keyword;
 		$flag_is_debug_mode = $this->flag_is_debug_mode;
 		$search_key         = $this->get_search_key( $this->search_mode );
-		$shuffle_status     = ( $this->flag_is_shuffle_mode ) ? "shuffle,all," : "";
+		$play_command       = $this->get_play_command( $this->search_mode );
 
 		/* Creating command */
 		$command  = "sudo {$path_mpsyt}";
 		$command .= ( $flag_has_api_key ) ? " set api_key {$api_key}," : "";
 		$command .= " set player {$player},";
 		$command .= "{$search_key} {$search_keyword},";
-		$command .= "1,{$shuffle_status}";
+		$command .= "{$play_command}";
 		$command .= "q";
 		$command .= ( $flag_is_debug_mode ) ? "" : ' > /dev/null &';
 		$command  = trim( $command );
